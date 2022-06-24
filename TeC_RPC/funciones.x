@@ -3,7 +3,7 @@ struct sumandos {
     int sumando2;
 };
 
-program FUNCIONESBASICAS{
+program FUNCIONESBASICAS {
     version VERSION_SUMA {
         int suma (sumandos) = 1;
     } = 1;
