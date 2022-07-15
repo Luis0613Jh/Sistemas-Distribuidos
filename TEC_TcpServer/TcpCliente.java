@@ -8,7 +8,7 @@ import java.net.Socket;
  *
  * @author Luis Jumbo
  * @Curso 6to "A"
- * @Fecha 06/06/2022
+ * @Fecha 14/07/2022
  */
 public class TcpCliente {
 
@@ -18,21 +18,23 @@ public class TcpCliente {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         server = new ServerSocket(port);
-        for (int i = 0; i < 10; i++) {
-            System.out.println("CLIENTE ACTIVO");
-            Socket socket = new Socket(host, port);
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-            oos.writeObject("Mensaje [" + i + "]");
-            System.out.println("Mensaje enviado al servidor");
+        int tiempoInicial = 0;
+        int tiempoFinal = 0;
+        int tiempoActualizado = 0;
+        System.out.println("CLIENTE ACTIVO");
+        Socket socketEnviar = new Socket(host, port);
+        ObjectOutputStream oos = new ObjectOutputStream(socketEnviar.getOutputStream());
+        long tiempoActual = System.currentTimeMillis();
+        oos.writeObject("Solicitar tiempo al servidor");
+        System.out.println("Mensaje enviado al servidor");
 
-            Socket socketRecibir = server.accept();
-            ObjectInputStream ois = new ObjectInputStream(socketRecibir.getInputStream());
-            String mensaje = String.valueOf(ois.readObject());
-            System.out.println("Mensaje recibido desde el servidor: " + mensaje);
-            oos.close();
-            ois.close();
-            socket.close();
-        }
+        
+        Socket socketRecibir = server.accept();
+        ObjectInputStream ois = new ObjectInputStream(socketRecibir.getInputStream());
+        String mensaje = String.valueOf(ois.readObject());
+        System.out.println("Tiempo recibido desde el servidor: " + mensaje);
+        ois.close();
+        oos.close();
+        server.close();
     }
-
 }

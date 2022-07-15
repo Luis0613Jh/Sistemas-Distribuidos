@@ -18,19 +18,18 @@ public class TcpServer {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         server = new ServerSocket(port);
-        int contador = 1000;
         while (true) {
             System.out.println("SERVIDOR ACTIVO");
             Socket socket = server.accept();
             ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
             String mensaje = String.valueOf(ois.readObject());
             System.out.println("Mensaje recibido: " + mensaje);
-
-            System.out.println("Enviando respuesta al cliente");
+            
+            System.out.println("Enviando tiempo al cliente");
             Socket socketEnviar = new Socket(host, port);
             ObjectOutputStream oos = new ObjectOutputStream(socketEnviar.getOutputStream());
-            oos.writeObject("Mensaje [" + contador + "] desde el servidor");
-            contador++;
+            long tiempoActual = System.currentTimeMillis();
+            oos.writeObject(tiempoActual);
             oos.close();
             ois.close();
             socket.close();
