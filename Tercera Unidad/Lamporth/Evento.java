@@ -1,7 +1,7 @@
 /**
  * @author Luis Jumbo
  * @Curso 6to "A"
- * @Fecha 15/07/2022
+ * @Fecha 17/07/2022
  */
 public class Evento {
     private String nombre;

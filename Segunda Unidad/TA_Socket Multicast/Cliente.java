@@ -16,6 +16,7 @@ public class Cliente {
     public static void main(String[] args) throws SocketException, IOException {
 
         clienteSocket = new MulticastSocket();
+        clienteSocket.
         byte[] sendData = new byte[1024];
         int contador = 0;
         String sentence;

@@ -3,26 +3,28 @@
  * @Curso 6to "A"
  * @Fecha 15/07/2022
  */
-public class Evento {
+public class EventoVectoresDeTiempo {
     private String nombre;
-    private int[] valor = new int[3];
+    private int[] valor;
     private int posicion;
     private String causalidadDesdeEvento;
     private String causalidadHastaEvento;
 
-    Evento() {
+    EventoVectoresDeTiempo() {
     }
 
-    Evento(String nombre, int posicion, String causalidadDesdeEvento, String causalidadHastaEvento) {
+    EventoVectoresDeTiempo(String nombre, int posicion, String causalidadDesdeEvento, String causalidadHastaEvento, int cantidadProcesos) {
         this.nombre = nombre;
         this.posicion = posicion - 1;
         this.causalidadDesdeEvento = causalidadDesdeEvento;
         this.causalidadHastaEvento = causalidadHastaEvento;
+        this.valor = new int[cantidadProcesos];
     }
 
-    Evento(String nombre, int posicion) {
+    EventoVectoresDeTiempo(String nombre, int posicion, int cantidadProcesos) {
         this.nombre = nombre;
         this.posicion = posicion - 1;
+        this.valor = new int[cantidadProcesos];
     }
 
     public String getNombre() {
@@ -67,6 +69,10 @@ public class Evento {
 
     @Override
     public String toString() {
-        return "[" + this.valor[0] + ", " + this.valor[1] + ", " + this.valor[2] + "]";
+        if (this.valor != null) {
+            return "[" + this.valor[0] + ", " + this.valor[1] + ", " + this.valor[2] + "]";
+        } else {
+            return "Sin valores";
+        }
     }
 }

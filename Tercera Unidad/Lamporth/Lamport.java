@@ -2,7 +2,7 @@
 /**
  * @author Luis Jumbo
  * @Curso 6to "A"
- * @Fecha 15/07/2022
+ * @Fecha 17/07/2022
  */
 public class Lamport {
 
@@ -17,11 +17,16 @@ public class Lamport {
         int relojLogicoProceso3 = 0;
 
         llenarProcesosConEventos(proceso1, proceso2, proceso3);
-        imprimirProcesos(proceso1, proceso2, proceso3);
-        System.out.println("================================================================================================");
-        aplicarAlgoritmoLamport(proceso1, proceso2, proceso3, relojLogicoProceso1, relojLogicoProceso2, relojLogicoProceso3);
-        imprimirProcesos(proceso1, proceso2, proceso3);
-        System.out.println("================================================================================================");
+        System.out.println();
+        imprimirProcesoeso(proceso1, 1);
+        System.out.println();
+        imprimirProcesoeso(proceso2, 2);
+        System.out.println();
+        imprimirProcesoeso(proceso3, 3);
+        System.out.println();
+        System.out.println("================================");
+        aplicarAlgoritmoLamport(proceso1, proceso2, proceso3, relojLogicoProceso1, relojLogicoProceso2,
+                relojLogicoProceso3);
         Evento[] eventosOrdenados = ordenarEventos(proceso1, proceso2, proceso3);
         imprimirEventos(eventosOrdenados);
     }
@@ -62,24 +67,38 @@ public class Lamport {
 
     public static void imprimirProcesos(Evento[] proceso1, Evento[] proceso2, Evento[] proceso3) {
         for (int i = 0; i < proceso1.length; i++) {
-            System.out.println("Proc 1 [" + i + "]: " + proceso1[i].getNombre());
-            System.out.println("Proc 1 [" + i + "]: " + proceso1[i].getValor());
-            System.out.println("Proc 1 [" + i + "]: " + proceso1[i].getPeso());
-            System.out.println("Proc 1 [" + i + "]: " + proceso1[i].getCausalidadDesdeEvento());
-            System.out.println("Proc 1 [" + i + "]: " + proceso1[i].getCausalidadHastaEvento());
+            System.out.println("Proceso 1 [" + i + "]: " + proceso1[i].getNombre());
+            System.out.println("Proceso 1 [" + i + "]: " + proceso1[i].getValor());
+            System.out.println("Proceso 1 [" + i + "]: " + proceso1[i].getPeso());
+            System.out.println("Proceso 1 [" + i + "]: " + proceso1[i].getCausalidadDesdeEvento());
+            System.out.println("Proceso 1 [" + i + "]: " + proceso1[i].getCausalidadHastaEvento());
             System.out.println();
-            System.out.println("Proc 2 [" + i + "]: " + proceso2[i].getNombre());
-            System.out.println("Proc 2 [" + i + "]: " + proceso2[i].getValor());
-            System.out.println("Proc 2 [" + i + "]: " + proceso2[i].getPeso());
-            System.out.println("Proc 2 [" + i + "]: " + proceso2[i].getCausalidadDesdeEvento());
-            System.out.println("Proc 2 [" + i + "]: " + proceso2[i].getCausalidadHastaEvento());
+            System.out.println("Proceso 2 [" + i + "]: " + proceso2[i].getNombre());
+            System.out.println("Proceso 2 [" + i + "]: " + proceso2[i].getValor());
+            System.out.println("Proceso 2 [" + i + "]: " + proceso2[i].getPeso());
+            System.out.println("Proceso 2 [" + i + "]: " + proceso2[i].getCausalidadDesdeEvento());
+            System.out.println("Proceso 2 [" + i + "]: " + proceso2[i].getCausalidadHastaEvento());
             System.out.println();
-            System.out.println("Proc 3 [" + i + "]: " + proceso3[i].getNombre());
-            System.out.println("Proc 3 [" + i + "]: " + proceso3[i].getValor());
-            System.out.println("Proc 3 [" + i + "]: " + proceso3[i].getPeso());
-            System.out.println("Proc 3 [" + i + "]: " + proceso3[i].getCausalidadDesdeEvento());
-            System.out.println("Proc 3 [" + i + "]: " + proceso3[i].getCausalidadHastaEvento());
+            System.out.println("Proceso 3 [" + i + "]: " + proceso3[i].getNombre());
+            System.out.println("Proceso 3 [" + i + "]: " + proceso3[i].getValor());
+            System.out.println("Proceso 3 [" + i + "]: " + proceso3[i].getPeso());
+            System.out.println("Proceso 3 [" + i + "]: " + proceso3[i].getCausalidadDesdeEvento());
+            System.out.println("Proceso 3 [" + i + "]: " + proceso3[i].getCausalidadHastaEvento());
             System.out.println();
+        }
+    }
+
+    public static void imprimirProcesoeso(Evento[] proceso, int numeroProceso) {
+        System.out.println("================ Proceso " + numeroProceso + " ================");
+
+        for (int i = 0; i < proceso.length; i++) {
+            if (proceso[i].getNombre() != null) {
+                if (proceso[i].getCausalidadHastaEvento() != null) {
+                    System.out.println("✱ " + proceso[i].getNombre() + " ➜ " + proceso[i].getCausalidadHastaEvento());
+                } else {
+                    System.out.println("✱ " + proceso[i].getNombre());
+                }
+            }
         }
     }
 
@@ -87,19 +106,22 @@ public class Lamport {
             int relojLogicoProceso1, int relojLogicoProceso2, int relojLogicoProceso3) {
         for (int i = 0; i < proceso1.length; i++) {
             if (proceso1[i].getNombre() != null) {
-                relojLogicoProceso1 = determinarRelojLogicoMayor(relojLogicoProceso1, proceso1[i], proceso1, proceso2,
+                relojLogicoProceso1 = determinarRelojLogicoMayor(relojLogicoProceso1, proceso1[i], proceso1,
+                        proceso2,
                         proceso3);
             } else if (proceso2[i].getNombre() != null) {
-                relojLogicoProceso2 = determinarRelojLogicoMayor(relojLogicoProceso2, proceso2[i], proceso1, proceso2,
+                relojLogicoProceso2 = determinarRelojLogicoMayor(relojLogicoProceso2, proceso2[i], proceso1,
+                        proceso2,
                         proceso3);
             } else if (proceso3[i].getNombre() != null) {
-                relojLogicoProceso3 = determinarRelojLogicoMayor(relojLogicoProceso3, proceso3[i], proceso1, proceso2,
+                relojLogicoProceso3 = determinarRelojLogicoMayor(relojLogicoProceso3, proceso3[i], proceso1,
+                        proceso2,
                         proceso3);
             }
         }
     }
 
-    public static Evento obtenerEventoDeProceso(String nombre, Evento[] proceso1, Evento[] proceso2,
+    public static Evento obtenerEventoDeProcesoeso(String nombre, Evento[] proceso1, Evento[] proceso2,
             Evento[] proceso3) {
         for (int i = 0; i < proceso1.length; i++) {
             if (proceso1[i].getNombre() != null && proceso1[i].getNombre().equalsIgnoreCase(nombre)) {
@@ -113,49 +135,81 @@ public class Lamport {
         return null;
     }
 
-    public static int determinarRelojLogicoMayor(int relojLogicoProceso, Evento evento, Evento[] proceso1,
+    public static int determinarRelojLogicoMayor(int relojLogicoProcesoeso, Evento evento, Evento[] proceso1,
             Evento[] proceso2, Evento[] proceso3) {
         if (evento.getCausalidadDesdeEvento() == null) {
-            relojLogicoProceso++;
-            evento.setValor(relojLogicoProceso);
+            relojLogicoProcesoeso++;
+            evento.setValor(relojLogicoProcesoeso);
         } else {
-            Evento causalidadDesdeEvento = obtenerEventoDeProceso(evento.getCausalidadDesdeEvento(), proceso1, proceso2,
+            Evento causalidadDesdeEvento = obtenerEventoDeProcesoeso(evento.getCausalidadDesdeEvento(), proceso1,
+                    proceso2,
                     proceso3);
             if (causalidadDesdeEvento != null) {
                 int valorEventoCausalidad = causalidadDesdeEvento.getValor();
-                if (relojLogicoProceso > valorEventoCausalidad) {
-                    relojLogicoProceso++;
-                    evento.setValor(relojLogicoProceso);
+                if (relojLogicoProcesoeso > valorEventoCausalidad) {
+                    relojLogicoProcesoeso++;
+                    evento.setValor(relojLogicoProcesoeso);
                 } else {
                     evento.setValor(valorEventoCausalidad + 1);
-                    relojLogicoProceso = valorEventoCausalidad + 1;
+                    relojLogicoProcesoeso = valorEventoCausalidad + 1;
                 }
             } else {
                 System.out.println("ERROR");
                 return -1;
             }
         }
-        return relojLogicoProceso;
+        return relojLogicoProcesoeso;
     }
 
     public static Evento[] ordenarEventos(Evento[] proceso1, Evento[] proceso2, Evento[] proceso3) {
         Evento[] eventosOrdenados = new Evento[proceso1.length];
         for (int i = 0; i < eventosOrdenados.length; i++) {
             int auxValor = 9999;
+            int auxPeso = 9999;
             String auxNombre = "";
             for (int j = 0; j < proceso1.length; j++) {
-                if (proceso1[j].getNombre() != null && proceso1[j].getValor() < auxValor) {
+                if (proceso1[j].getNombre() != null && proceso1[j].getValor() <= auxValor) {
+                    if (proceso1[j].getValor() == auxValor) {
+                        if (proceso1[j].getPeso() <= auxPeso) {
+                            eventosOrdenados[i] = proceso1[j];
+                            auxPeso = proceso1[j].getPeso();
+                            auxValor = proceso1[j].getValor();
+                            auxNombre = proceso1[j].getNombre();
+                        }
+                    } else {
                         eventosOrdenados[i] = proceso1[j];
+                        auxPeso = proceso1[j].getPeso();
                         auxValor = proceso1[j].getValor();
                         auxNombre = proceso1[j].getNombre();
-                } else if (proceso2[j].getNombre() != null && proceso2[j].getValor() < auxValor) {
+                    }
+                } else if (proceso2[j].getNombre() != null && proceso2[j].getValor() <= auxValor) {
+                    if (proceso2[j].getValor() == auxValor) {
+                        if (proceso2[j].getPeso() <= auxPeso) {
+                            eventosOrdenados[i] = proceso2[j];
+                            auxPeso = proceso2[j].getPeso();
+                            auxValor = proceso2[j].getValor();
+                            auxNombre = proceso2[j].getNombre();
+                        }
+                    } else {
                         eventosOrdenados[i] = proceso2[j];
+                        auxPeso = proceso2[j].getPeso();
                         auxValor = proceso2[j].getValor();
                         auxNombre = proceso2[j].getNombre();
-                } else if (proceso3[j].getNombre() != null && proceso3[j].getValor() < auxValor) {
+                    }
+                } else if (proceso3[j].getNombre() != null && proceso3[j].getValor() <= auxValor) {
+                    if (proceso3[j].getValor() == auxValor) {
+                        if (proceso3[j].getPeso() <= auxPeso) {
+                            eventosOrdenados[i] = proceso3[j];
+                            auxPeso = proceso3[j].getPeso();
+                            auxValor = proceso3[j].getValor();
+                            auxNombre = proceso3[j].getNombre();
+                        }
+                    } else {
                         eventosOrdenados[i] = proceso3[j];
+                        auxPeso = proceso3[j].getPeso();
                         auxValor = proceso3[j].getValor();
                         auxNombre = proceso3[j].getNombre();
+                    }
                 }
             }
             for (int k = 0; k < proceso1.length; k++) {
@@ -173,7 +227,8 @@ public class Lamport {
 
     public static void imprimirEventos(Evento[] eventos) {
         for (int i = 0; i < eventos.length; i++) {
-            System.out.println("(" + (i + 1) + ") Evento '" + eventos[i].getNombre() + "': " + eventos[i].getValor() + "." + eventos[i].getPeso());
+            System.out.println("(" + (i + 1) + ") Evento '" + eventos[i].getNombre() + "': " + eventos[i].getValor()
+                    + "." + eventos[i].getPeso());
         }
     }
 }
